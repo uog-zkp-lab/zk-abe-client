@@ -1,34 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# zk-abe-client
 
-## Getting Started
+This repository creates the UI to interact with smart contract and backend in the zkabe system.
 
-First, run the development server:
-
+## How to run this app?
+ 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Notations
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+| Abbreviation | Full Term                 |
+|--------------|---------------------------|
+| FE           | Frontend                  |
+| BE           | Backend                   |
+| SC           | Smart Contract            |
+| DO           | Data Owner                |
+| DP           | Data Processor            |
+| Tx           | Transaction               |
+| H            | Hash Function             |
+| SK           | Secret Key                |
+| ACP          | Access Control Policy     |
+| MTR          | Merkle Tree Root          |
 
-## Learn More
+## Spec for frontend: 
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. UI of DP register 
+    * (a) DP generate a Merkle Root to register on chain (by reading a json file)
+    * (b) Send a tx to register function on smart contract.  
+2. UI of DO register            
+3. UI of DP requesting data for DO  
+    * DP have H(uid) and calls retrieve ACP API > (backend generate proof) > get proof from backend
+    * DP sign a transaction mint the token
+    * DP use the same wallet address to request the secret key back > get SK (token should also burned) 
