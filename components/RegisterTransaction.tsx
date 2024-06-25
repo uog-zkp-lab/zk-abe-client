@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { registerOnChain } from '../utils/blockchain';
+import { registerDP } from '../utils/blockchain';
 
 interface RegisterTransactionProps {
   merkleRoot: string;
@@ -9,7 +9,7 @@ const RegisterTransaction: React.FC<RegisterTransactionProps> = ({ merkleRoot })
   const [txHash, setTxHash] = useState<string>('');
 
   const handleRegister = async () => {
-    const hash = await registerOnChain(merkleRoot);
+    const hash = await registerDP(merkleRoot);
     setTxHash(hash);
   };
 

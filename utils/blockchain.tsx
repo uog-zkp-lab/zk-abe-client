@@ -1,22 +1,19 @@
+import Web3 from 'web3';
 
-import { ethers } from 'ethers';
+const web3 = new Web3(Web3.givenProvider);
+const contractAddress = 'YOUR_CONTRACT_ADDRESS';
+const contractABI = [...]; // ABI of the smart contract
 
-/**
- * Registers a Merkle Root on the blockchain.
- * @param merkleRoot - The Merkle Root to register.
- * @returns The transaction hash as a promise.
- */
-export const registerOnChain = async (merkleRoot: string): Promise<string> => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  return '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef';
+export const registerDP = async (merkleRoot: string): Promise<string> => {
+  const accounts = await web3.eth.getAccounts();
+  const contract = new web3.eth.Contract(contractABI, contractAddress);
+  const transaction = await contract.methods.register(merkleRoot).send({ from: accounts[0] });
+  return transaction.transactionHash;
 };
 
-/**
- * Mints a token based on the provided proof.
- * @param proof - The proof to mint the token with.
- * @returns The token hash as a promise.
- */
 export const mintToken = async (proof: any): Promise<string> => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  return '0xfedcba0987654321fedcba0987654321fedcba0987654321fedcba0987654321';
+  const accounts = await web3.eth.getAccounts();
+  const contract = new web3.eth.Contract(contractABI, contractAddress);
+  const transaction = await contract.methods.mintToken(proof).send({ from: accounts[0] });
+  return transaction.transactionHash;
 };

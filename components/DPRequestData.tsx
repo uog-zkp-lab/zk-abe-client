@@ -1,14 +1,26 @@
 import { useState } from 'react';
-import { retrieveACP } from '../utils/api.tsx';
+import { retrieveACP } from '../utils/api';
+import { mintToken } from '../utils/blockchain';
 
 const DPRequestData: React.FC = () => {
   const [uid, setUid] = useState('');
   const [acp, setAcp] = useState<any>(null);
+  const [tokenHash, setTokenHash] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
   const handleRequest = async () => {
-    const data = await retrieveACP(uid);
-    setAcp(data);
-    alert(`Received ACP: ${JSON.stringify(data)}`);
+    try {
+      const data = await retrieveACP(uid);
+      setAcp(data);
+      if (data) {
+        const hash = await mintToken(data.proof);
+        setTokenHash(hash);
+        alert(`Received ACP: ${JSON.stringify(data)}\nMinted Token Hash: ${hash}`);
+      }
+    } catch (err) {
+      setError('Error retrieving ACP or minting token. Please try again.');
+      console.error('Error:', err);
+    }
   };
 
   return (
@@ -22,6 +34,8 @@ const DPRequestData: React.FC = () => {
       />
       <button onClick={handleRequest}>Request ACP</button>
       {acp && <pre>{JSON.stringify(acp, null, 2)}</pre>}
+      {tokenHash && <p>Minted Token Hash: {tokenHash}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 };
