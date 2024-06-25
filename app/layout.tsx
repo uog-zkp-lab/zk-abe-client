@@ -2,8 +2,8 @@
 import { WagmiConfig, createConfig } from "wagmi";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import { ChakraProvider } from "@chakra-ui/react";
-import Navbar from "@/components/navigation/navbar";
-import Footer from "@/components/navigation/footer";
+import Navbar from "@components/navigation/navbar";
+import Footer from "@components/navigation/footer";
 
 const config = createConfig(
   getDefaultConfig({
