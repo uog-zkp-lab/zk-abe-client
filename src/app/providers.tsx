@@ -39,19 +39,19 @@ export function Providers(props: {
         <WagmiProvider config={config} initialState={props.initialState}>
             <QueryClientProvider client={queryClient}>
                 <ConnectKitProvider>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                minHeight: '100vh',
-                            }}
-                        >
-                            <Navbar />
-                            <Box component="main" sx={{ flexGrow: 1 }}>
-                                {props.children}
-                            </Box>
-                            <Footer />
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            minHeight: '100vh',
+                        }}
+                    >
+                        <Navbar />
+                        <Box component="main" sx={{ flexGrow: 1 }}>
+                            {props.children}
                         </Box>
+                        <Footer />
+                    </Box>
                 </ConnectKitProvider>
             </QueryClientProvider>
         </WagmiProvider>

@@ -30,22 +30,25 @@ const PublicKeyRequest: React.FC<PublicKeyRequestProps> = ({
 
         try {
             // retrieve public key from supabase
-            const { data: pk, error } = await supabaseClient.from('keys').select('public_key').single()
-            console.log(pk);
-            
+            const { data: pk, error } = await supabaseClient
+                .from('keys')
+                .select('public_key')
+                .single()
+            console.log(pk)
+
             if (error) {
                 throw new Error(error.message)
             }
 
             if (pk) {
-              // simulate a 1 sec delay
-              await new Promise((resolve) => setTimeout(resolve, 1000))
-              setPublicKey(pk.public_key)
-              onPublicKeyRetrieved(pk.public_key)
-              setIsSuccess(true)
-              setIsSuccess(true)
+                // simulate a 1 sec delay
+                await new Promise((resolve) => setTimeout(resolve, 1000))
+                setPublicKey(pk.public_key)
+                onPublicKeyRetrieved(pk.public_key)
+                setIsSuccess(true)
+                setIsSuccess(true)
             } else {
-              throw new Error('Public key not found!')
+                throw new Error('Public key not found!')
             }
         } catch (err) {
             setError('Failed to fetch public key.')

@@ -37,11 +37,15 @@ const CreateToken: React.FC<CreateTokenProps> = ({ ipfsHash }) => {
         const getTokenId = async () => {
             if (hash) {
                 try {
-                    const receipt = await publicClient.getTransactionReceipt({ hash })
+                    const receipt = await publicClient.getTransactionReceipt({
+                        hash,
+                    })
                     const tokenCreatedEvent = receipt.logs.find(
                         (log) =>
                             log.topics[0] ===
-                            AccessToken.abi.find((e) => e.name === 'TokenCreated')
+                            AccessToken.abi.find(
+                                (e) => e.name === 'TokenCreated',
+                            ),
                     )
 
                     if (tokenCreatedEvent) {
@@ -52,11 +56,17 @@ const CreateToken: React.FC<CreateTokenProps> = ({ ipfsHash }) => {
                         })
 
                         if (decodedLog.args && 'tokenId' in decodedLog.args) {
-                            const tokenIdValue = decodedLog.args.tokenId;
-                            if (typeof tokenIdValue === 'bigint' || typeof tokenIdValue === 'number') {
-                                setTokenId(tokenIdValue.toString());
+                            const tokenIdValue = decodedLog.args.tokenId
+                            if (
+                                typeof tokenIdValue === 'bigint' ||
+                                typeof tokenIdValue === 'number'
+                            ) {
+                                setTokenId(tokenIdValue.toString())
                             } else {
-                                console.error('Unexpected tokenId type:', typeof tokenIdValue);
+                                console.error(
+                                    'Unexpected tokenId type:',
+                                    typeof tokenIdValue,
+                                )
                             }
                         }
                     }
@@ -90,19 +100,26 @@ const CreateToken: React.FC<CreateTokenProps> = ({ ipfsHash }) => {
                     {hash && (
                         <Box>
                             <Typography color="success.main" mt={2}>
-                                Transaction hash: 
-                                <Link href={`https://sepolia.arbiscan.io/tx/${hash}`} target="_blank" rel="noopener noreferrer">
+                                Transaction hash:
+                                <Link
+                                    href={`https://sepolia.arbiscan.io/tx/${hash}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
                                     {hash}
                                 </Link>
                             </Typography>
                             <Typography color="error" mt={2}>
-                                Please click in the link and copy the token ID!!!
+                                Please click in the link and copy the token
+                                ID!!!
                             </Typography>
                         </Box>
                     )}
                 </Box>
             ) : (
-                <Typography>No IPFS hash available. Please complete the previous steps.</Typography>
+                <Typography>
+                    No IPFS hash available. Please complete the previous steps.
+                </Typography>
             )}
         </Box>
     )

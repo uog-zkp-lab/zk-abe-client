@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, TextField, Typography, Box, Fade } from '@mui/material'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
-import { PinataSDK } from "pinata";
+import { PinataSDK } from 'pinata'
 
 interface IPFSUploadProps {
     ciphertext: string | null
@@ -21,9 +21,9 @@ const IPFSUpload: React.FC<IPFSUploadProps> = ({ ciphertext, onUpload }) => {
 
         try {
             const pinata = new PinataSDK({
-              pinataJwt: process.env.NEXT_PUBLIC_PINATA_JWT!,
-              pinataGateway: process.env.NEXT_PUBLIC_PINATA_GATEWAY!,
-            });
+                pinataJwt: process.env.NEXT_PUBLIC_PINATA_JWT!,
+                pinataGateway: process.env.NEXT_PUBLIC_PINATA_GATEWAY!,
+            })
 
             const data = {
                 ciphertext,
@@ -38,7 +38,7 @@ const IPFSUpload: React.FC<IPFSUploadProps> = ({ ciphertext, onUpload }) => {
         } catch (err) {
             setError(
                 'Error uploading data to IPFS: ' +
-                    (err instanceof Error ? err.message : 'Unknown error')
+                    (err instanceof Error ? err.message : 'Unknown error'),
             )
         }
     }
