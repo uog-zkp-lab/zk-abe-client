@@ -1,3 +1,5 @@
+/// This page is the main page for data owner to encrypt their data
+
 'use client'
 
 import React, { useState } from 'react'
@@ -42,6 +44,12 @@ export default function EncryptionProcess() {
         setIpfsHash(null)
     }
 
+    /// The 4 steps in encrpytion:
+    /// 1. Requesting Public Key
+    /// 2. Encrypting Data
+    /// 3. Uploading to IPFS
+    /// 4. Create Token
+    /// we don't want the kgs to have too much power, so we let the data owner encrypt their plaintext themselves
     const getStepContent = (step: number) => {
         switch (step) {
             case 0:
