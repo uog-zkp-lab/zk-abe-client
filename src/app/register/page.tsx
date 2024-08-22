@@ -93,8 +93,8 @@ export default function Register() {
                                 </Link>
                             </Typography>
                             <Typography color="error" mt={2}>
-                                Please click in the link and copy the token
-                                ID!!!
+                                You are registered! Make sure to keep your
+                                attributes!
                             </Typography>
                         </Box>
                     )}
