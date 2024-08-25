@@ -1,11 +1,10 @@
 import { keccak256, encodeAbiParameters, parseAbiParameters } from 'viem'
 
-export async function getAttributesHash(
-    attributeFile: File,
-): Promise<`0x${string}`> {
+export async function getAttributesHash(attributeFile: File): Promise<string> {
     try {
         const fileContent = await attributeFile.text()
         const attributes = JSON.parse(fileContent)
+
         // convert attributes to string
         const attributesString = convertAttributes(attributes)
 
