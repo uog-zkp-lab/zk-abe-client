@@ -12,13 +12,7 @@ export default function Register() {
     const [attributesFile, setAttributesFile] = React.useState<File | null>(
         null,
     )
-    const {
-        data: hash,
-        isPending,
-        isError,
-        isSuccess,
-        writeContract,
-    } = useWriteContract()
+    const { data: hash, writeContract } = useWriteContract()
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -35,7 +29,6 @@ export default function Register() {
 
         try {
             const attributesHash = await getAttributesHash(attributesFile)
-
             if (accessTokenAddress) {
                 await writeContract({
                     address: accessTokenAddress as `0x${string}`,
