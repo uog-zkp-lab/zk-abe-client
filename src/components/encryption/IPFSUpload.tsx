@@ -44,7 +44,13 @@ const IPFSUpload: React.FC<IPFSUploadProps> = ({ ciphertext, onUpload }) => {
     }
 
     return (
-        <Box>
+        <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="45vh"
+        >
             <Typography variant="h6">Upload to IPFS</Typography>
             <TextField
                 fullWidth

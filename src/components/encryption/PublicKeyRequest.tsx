@@ -59,7 +59,13 @@ const PublicKeyRequest: React.FC<PublicKeyRequestProps> = ({
     }
 
     return (
-        <Box>
+        <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="45vh"
+        >
             <Typography variant="h6">Request Public Key</Typography>
             <Button
                 variant="contained"

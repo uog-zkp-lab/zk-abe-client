@@ -44,7 +44,13 @@ const DataEncryption: React.FC<DataEncryptionProps> = ({
     }
 
     return (
-        <Box>
+        <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="45vh"
+        >
             <Typography variant="h6">Data Encryption</Typography>
             <TextField
                 fullWidth

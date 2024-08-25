@@ -8,7 +8,7 @@ export default function Home() {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
-                minHeight: 'calc(100vh - 75px)',
+                minHeight: '45vh',
                 py: 4,
             }}
         >
