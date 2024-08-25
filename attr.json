@@ -1,0 +1,12 @@
+{
+    "attributes": [
+        { "Role": "Doctor" },
+        { "Age": "40" },
+        { "Department": "Oncology" },
+        { "medical_license": "ML123456" },
+        { "speciality_cardiology": "certified" },
+        { "hospital_affiliation": "Central Hospital" },
+        { "patient_consent": "granted" },
+        { "scheduled_appointment": "2023-08-15T10:00:00Z" }
+    ]
+}
