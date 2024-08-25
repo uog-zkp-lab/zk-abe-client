@@ -22,6 +22,7 @@
         "@supabase/supabase-js": "^2.45.1",
         "@tanstack/react-query": "5.0.5",
         "connectkit": "^1.8.2",
+        "ethers": "5.7.2",
         "helia": "^4.2.5",
         "next": "14.2.5",
         "pinata": "^0.3.3",
