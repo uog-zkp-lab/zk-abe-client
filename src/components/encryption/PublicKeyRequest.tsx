@@ -34,7 +34,6 @@ const PublicKeyRequest: React.FC<PublicKeyRequestProps> = ({
                 .from('keys')
                 .select('public_key')
                 .single()
-            console.log(pk)
 
             if (error) {
                 throw new Error(error.message)
