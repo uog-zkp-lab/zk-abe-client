@@ -40,6 +40,11 @@ export default function Navbar() {
                                 Mint
                             </Button>
                         </Link>
+                        <Link href="/decrypt" passHref legacyBehavior>
+                            <Button color="inherit" component="a">
+                                Decrypt
+                            </Button>
+                        </Link>
                     </Box>
                     <ConnectKitButton />
                 </Toolbar>
