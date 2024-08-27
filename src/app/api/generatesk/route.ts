@@ -70,7 +70,6 @@ export async function POST(request: Request) {
         const attributes = parseAttributes(attr)
         console.log(attributes)
 
-        // TODO: fetch public key and master secret key from supabase
         const { data: keys, error: keysError } = await supabaseClient
             .from('keys')
             .select('public_key, master_secret_key')
@@ -86,7 +85,6 @@ export async function POST(request: Request) {
         console.log('\n\n==================================\n\n')
         console.log(msk)
         console.log('\n\n==================================\n\n')
-        // TODO: generate secret key with the attributes
 
         let sk: any
 
