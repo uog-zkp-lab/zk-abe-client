@@ -4,8 +4,9 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
-        "build": "next build",
-        "build:wasm": "rm -rf public/wasm && mkdir -p public/wasm && cd keygen_server && wasm-pack build --target web && cp -r pkg ../src/ && cp -r pkg ../public",
+        "build": "bash vercel-build-script.sh",
+        "build:wasm": "rm -rf public/wasm && mkdir -p public/wasm && cd keygen_server && /vercel/.cargo/bin/wasm-pack build --target web && cp -r pkg ../src/ && cp -r pkg ../public",
+        "build:local:wasm": "rm -rf public/wasm && mkdir -p public/wasm && cd keygen_server && wasm-pack build --target web && cp -r pkg ../src/ && cp -r pkg ../public",
         "start": "next start",
         "lint": "prettier .",
         "lint:fix": "pnpm lint --write",
