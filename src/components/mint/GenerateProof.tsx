@@ -83,7 +83,7 @@ const GenerateProof: React.FC<GenerateProofProps> = ({
             }
 
             const response = await fetch(
-                'http://localhost:5566/api/generate_proof',
+                `${process.env.NEXT_PUBLIC_ZKSERVER_URL}/api/generate_proof`,
                 {
                     method: 'POST',
                     headers: {
