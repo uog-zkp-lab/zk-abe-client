@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import init, { decrypt } from '@/pkg'
-import { Button, TextField, Typography, Box, Fade } from '@mui/material'
+import {
+    Button,
+    TextField,
+    Typography,
+    Box,
+    Fade,
+    CircularProgress,
+} from '@mui/material'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 
 import { createPublicClient, http } from 'viem'
@@ -21,14 +28,19 @@ export default function DataDecrypt({
     const [ciphertext, setCiphertext] = useState<string>('')
     const [error, setError] = useState<string | null>(null)
     const [isSuccess, setIsSuccess] = useState<boolean>(false)
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+
+    const [isFetchingCiphertext, setIsFetchingCiphertext] =
+        useState<boolean>(false)
+    const [isCiphertextFetched, setIsCiphertextFetched] =
+        useState<boolean>(false)
+    const [decryptedText, setDecryptedText] = useState<string>('')
 
     useEffect(() => {
         init()
     }, [])
 
     const fetchCiphertext = async () => {
-        setIsLoading(true)
+        setIsFetchingCiphertext(true)
         setError(null)
 
         const contractAddress = process.env
@@ -53,6 +65,9 @@ export default function DataDecrypt({
         const ipfsData = await ipfsResponse.json()
         console.log(ipfsData.ciphertext)
 
+        setIsFetchingCiphertext(false)
+        setIsCiphertextFetched(true)
+
         setCiphertext(ipfsData.ciphertext)
     }
 
@@ -69,6 +84,7 @@ export default function DataDecrypt({
             const result = decrypt(secretKey, ciphertext)
             const decodedPlaintext = new TextDecoder().decode(result)
             console.log('Decrypted result:', decodedPlaintext)
+            setDecryptedText(decodedPlaintext)
             onDecryption(decodedPlaintext)
             setIsSuccess(true)
         } catch (err) {
@@ -85,30 +101,49 @@ export default function DataDecrypt({
             justifyContent="center"
             alignItems="center"
             minHeight="45vh"
+            gap={2}
         >
-            <Typography variant="h6">Data Decryption</Typography>
+            <Typography variant="h6" gutterBottom>
+                Data Decryption
+            </Typography>
             <Button
                 variant="contained"
                 onClick={fetchCiphertext}
+                disabled={isFetchingCiphertext || isCiphertextFetched}
+                startIcon={
+                    isFetchingCiphertext ? (
+                        <CircularProgress size={20} color="inherit" />
+                    ) : null
+                }
                 sx={{ mb: 2 }}
             >
-                Fetch Ciphertext
+                {isFetchingCiphertext ? 'Fetching...' : 'Fetch Ciphertext'}
             </Button>
             <Button
                 variant="contained"
                 onClick={handleDecrypt}
-                disabled={isSuccess}
+                disabled={!isCiphertextFetched || isSuccess}
+                sx={{ mb: 2 }}
             >
                 Decrypt
             </Button>
-            {error && <Typography color="error">{error}</Typography>}
+            {error && (
+                <Typography color="error" sx={{ mb: 2 }}>
+                    {error}
+                </Typography>
+            )}
+            <Fade in={isCiphertextFetched && !isSuccess} timeout={500}>
+                <Typography sx={{ mb: 2 }}>
+                    Ciphertext fetched successfully!
+                </Typography>
+            </Fade>
             <Fade in={isSuccess} timeout={500}>
-                <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
-                    <CheckCircleOutlineIcon color="success" />
-                    <Typography color="success" sx={{ ml: 1 }}>
-                        Data successfully decrypted!
-                    </Typography>
-                </Box>
+                <Typography
+                    color="success.main"
+                    sx={{ mt: 2, fontWeight: 'bold' }}
+                >
+                    {decryptedText}
+                </Typography>
             </Fade>
         </Box>
     )

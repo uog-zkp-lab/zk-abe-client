@@ -1,7 +1,15 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Button, TextField, Typography, Box } from '@mui/material'
+import {
+    Button,
+    TextField,
+    Typography,
+    Box,
+    CircularProgress,
+    Fade,
+} from '@mui/material'
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import { ethers } from 'ethers'
 import { useAccount, useSignMessage } from 'wagmi'
 
@@ -19,6 +27,8 @@ export default function SecretKeyRequest({
     const [cid, setCid] = useState<string | null>(null)
     const { address } = useAccount()
     const { signMessageAsync } = useSignMessage()
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isSuccess, setIsSuccess] = useState<boolean>(false)
 
     const sendRequest = async (requestBody: any) => {
         const response = await fetch('/api/generatesk', {
@@ -52,6 +62,8 @@ export default function SecretKeyRequest({
         }
 
         try {
+            setIsLoading(true)
+            setIsSuccess(false)
             setError(null)
             const provider = new ethers.providers.Web3Provider(window.ethereum)
             const signer = await provider.getSigner()
@@ -74,6 +86,8 @@ export default function SecretKeyRequest({
 
             console.log(response)
             onSecretKeyRetrieved(response.secretKey)
+            setIsSuccess(true)
+            setIsLoading(false)
         } catch (error: any) {
             setError(error.message)
         }
@@ -104,14 +118,28 @@ export default function SecretKeyRequest({
                 onClick={handleSkRequest}
                 fullWidth
                 sx={{ mt: 2 }}
+                disabled={isLoading || isSuccess}
+                startIcon={
+                    isLoading ? (
+                        <CircularProgress size={20} color="inherit" />
+                    ) : null
+                }
             >
-                Request Secret Key
+                {isLoading ? 'Requesting...' : 'Request Secret Key'}
             </Button>
             {error && (
                 <Typography color="error" sx={{ mt: 2 }}>
                     {error}
                 </Typography>
             )}
+            <Fade in={isSuccess} timeout={500}>
+                <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
+                    <CheckCircleOutlineIcon color="success" />
+                    <Typography color="success" sx={{ ml: 1 }}>
+                        Secret key successfully retrieved!
+                    </Typography>
+                </Box>
+            </Fade>
         </Box>
     )
 }

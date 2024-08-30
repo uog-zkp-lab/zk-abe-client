@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Typography, Box, Button, CircularProgress } from '@mui/material'
+import Link from 'next/link'
 import { useWriteContract, useAccount } from 'wagmi'
 import AccessToken from '@/contracts/AccessToken.json'
 import * as ethers from 'ethers'
@@ -22,6 +23,8 @@ const MintToken: React.FC<MintTokenProps> = ({
     const [error, setError] = useState<string | null>(null)
     const { writeContract, data: hash, error: writeError } = useWriteContract()
     const { address } = useAccount()
+    const [isMinted, setIsMinted] = useState(false)
+    const [txHash, setTxHash] = useState<string | null>(null)
 
     const mint = async (seal: any, tokenId: any, attributeHash: any) => {
         if (typeof window.ethereum === 'undefined') {
@@ -78,6 +81,8 @@ const MintToken: React.FC<MintTokenProps> = ({
             )
             console.log('Mint result:', result)
             onTokenMinted(true)
+            setIsMinted(true)
+            setTxHash(result.transactionHash)
         } catch (err) {
             setError('Failed to mint token. Please try again.')
             console.error('Error minting token:', err)
@@ -110,11 +115,29 @@ const MintToken: React.FC<MintTokenProps> = ({
             <Button
                 variant="contained"
                 onClick={handleMintToken}
-                disabled={!response || isLoading}
+                disabled={!response || isLoading || isMinted}
             >
-                {isLoading ? <CircularProgress size={24} /> : 'Mint Token'}
+                {isLoading ? (
+                    <CircularProgress size={24} />
+                ) : isMinted ? (
+                    'Minted'
+                ) : (
+                    'Mint Token'
+                )}
             </Button>
             {error && <Typography color="error">{error}</Typography>}
+            {txHash && (
+                <Typography color="success.main" mt={2}>
+                    Transaction hash:
+                    <Link
+                        href={`https://sepolia.arbiscan.io/tx/${txHash}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {txHash}
+                    </Link>
+                </Typography>
+            )}
         </Box>
     )
 }
