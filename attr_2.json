@@ -1,0 +1,16 @@
+{
+    "attributes": [
+      {"Role": "Doctor"},
+      {"Department": "Oncology"},
+      {"Age": "30"},
+      {"Experience": "Senior"},
+      {"Certification": "Advanced"},
+      {"Shift": "Day"},
+      {"AccessLevel": "Full"},
+      {"Mentor": "Assigned"},
+      {"Project": "Ongoing"},
+      {"ContractType": "Full-Time"},
+      {"SecurityClearance": "High"}
+    ]
+}
+  
